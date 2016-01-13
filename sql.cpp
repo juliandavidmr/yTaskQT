@@ -15,12 +15,11 @@ bool sql::conectar()
         db.setDatabaseName("./data2.sqlite"); //Nuestra db en nuestro Home.
         if (!db.open()) {
             QMessageBox::critical(0, qApp->tr("Cannot open database"),
-                qApp->tr("Unable to establish a database connection.\n"
-                         "This example needs SQLite support. Please read "
-                         "the Qt SQL driver documentation for information how "
-                         "to build it.\n\n"
-                         "Click Cancel to exit."), QMessageBox::Cancel);
-            conectado = false;
+                                  qApp->tr("Unable to establish a database connection.\n"
+                                           "This example needs SQLite support. Please read "
+                                           "the Qt SQL driver documentation for information how "
+                                           "to build it.\n\n"
+                                           "Click Cancel to exit."), QMessageBox::Cancel);
             return false;
         }
 
@@ -49,11 +48,18 @@ bool sql::conectar()
         query.exec("CREATE INDEX `index_categoria` ON `categoria` (`id_categoria` ASC,`nombre_categoria` ASC,`descripcion` );");
         //query.exec("insert into person values(104, 'Roberto', 'Robitaille')");
 
+        query.exec("SELECT * FROM prioridad;");
+        if(query.next()){
+            std::cout << "Si hay datos";
+        } else {
+            std::cout << "NO hay datos";
+        }
+
         return true;
     }
     else
         qDebug() << "Driver no Disponible";
-        return false;
+    return false;
 }
 
 QSqlQuery sql::consultar_prioridades(){

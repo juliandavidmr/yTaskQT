@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>249</width>
-    <height>320</height>
+    <width>264</width>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>280</y>
+     <x>30</x>
+     <y>180</y>
      <width>221</width>
      <height>41</height>
     </rect>
@@ -34,8 +34,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>231</width>
-     <height>271</height>
+     <width>243</width>
+     <height>171</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -47,7 +47,7 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="lineEdit_nombretarea"/>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
@@ -56,8 +56,42 @@
       </property>
      </widget>
     </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Tags</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="lineEdit_tags"/>
+    </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_realizaren">
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Categoria</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="comboBox_categoria"/>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="comboBox_prioridad"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>PPrioridad</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

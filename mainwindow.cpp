@@ -9,9 +9,11 @@
 #include <QTableWidgetItem>
 //SQL
 #include <sqlite.h>
+#include <dialognuevatarea.h>
 
 QStringListModel *model;
 sql *s = new sql();
+QSqlQuery query;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,7 +45,7 @@ void MainWindow::inicializar_sqlite(){
     int i=0;
     //recorremos la consulta que realizamos antes
 
-    QSqlQuery query = s->consultar_prioridades();
+    query = s->consultar_prioridades();
 
     while (query.next()) {
         //añadimos en cada columna un dato según corresponda cada registro tiene un posición numérica en la tabla
@@ -71,7 +73,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_nuevatarea_clicked()
 {
-
+    DialogNuevaTarea *dialog = new DialogNuevaTarea(query);
+    dialog->setWindowTitle("Dialog");
+    dialog->show();
 }
 
 void MainWindow::on_pushButton_Eliminar_clicked()
