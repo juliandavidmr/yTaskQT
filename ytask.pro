@@ -14,9 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    sql.cpp
+    sql.cpp \
+    dialognuevatarea.cpp
 
 HEADERS  += mainwindow.h \
-    sqlite.h
+    sqlite.h \
+    dialognuevatarea.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialognuevatarea.ui

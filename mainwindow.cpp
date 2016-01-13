@@ -6,10 +6,12 @@
 #include <QStringListModel>
 #include <QAbstractItemView>
 #include <QComboBox>
+#include <QTableWidgetItem>
 //SQL
 #include <sqlite.h>
 
 QStringListModel *model;
+sql *s = new sql();
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,36 +19,48 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Create model
-    model = new QStringListModel(this);
-
-    // Make data
-    QStringList List;
-    List << "Clair de Lune\nsd" << "Reverie" << "Prelude";
-
-    // Populate our model
-    model->setStringList(List);
-
-    // Glue model and view together
-    ui->listView->setModel(model);
-    ui->comboBox->setModel(model);
-
-    // Add additional feature so that
-    // we can manually modify the data in ListView
-    // It may be triggered by hitting any key or double-click etc.
-    ui->listView->
-            setEditTriggers(QAbstractItemView::AnyKeyPressed |
-                            QAbstractItemView::DoubleClicked);
-
-    sqlite_connect();
+    inicializar_sqlite();
 }
 
-MainWindow::sqlite_connect(){
-    sql *s = new sql();
-    if(s->conectar()){
-        printf("Conectado a sqlite\n");
-    } else {
-        printf("No se pudo establecer la conexion con sqlite.\n");
+void MainWindow::inicializar_sqlite(){
+    //if(s->conectar()){ }
+    // ivocamos la interfaces ui y el componente, ponemos filas por defecto 1
+
+    ui->tableWidget->setRowCount(1);
+
+    //Añadimos 3 columnas
+    ui->tableWidget->setColumnCount(3);
+
+    //hacemos las columnas expandibles
+    ui->tableWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+    //Añadimos un nombre a cada columna
+    ui->tableWidget->setHorizontalHeaderLabels(QString("Producto;Stock;Precio").split(";"));
+
+
+    //creamos una variable para el conocer numero de fila mostrada
+
+    int i=0;
+    //recorremos la consulta que realizamos antes
+
+    QSqlQuery query = s->consultar_prioridades();
+
+    while (query.next()) {
+        //añadimos en cada columna un dato según corresponda cada registro tiene un posición numérica en la tabla
+
+        //producto
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(query.value(1).toString()));
+
+        //stock
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(query.value(2).toString()));
+
+        //precio
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(query.value(3).toString()));
+
+        i++;
+        //insertamos una nueva fila en el tablewidget
+
+        ui->tableWidget->insertRow(i);
     }
 }
 
@@ -57,29 +71,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_nuevatarea_clicked()
 {
-   //QMessageBox::information(this, "Mensaje información", "Bienvenido a mi primera aplicación Qt");
-   // Add button clicked
-   // Adding at the end
 
-   // Get the position
-   int row = model->rowCount();
-
-   // Enable add one or more rows
-   model->insertRows(row,1);
-
-   // Get the row for Edit mode
-   QModelIndex index = model->index(row);
-
-   // Enable item selection and put it edit mode
-   ui->listView->setCurrentIndex(index);
-   ui->listView->edit(index);
 }
 
 void MainWindow::on_pushButton_Eliminar_clicked()
 {
-    // Delete button clicked
-    // For delete operation,
-    // we're dealing with a Model not a View
-    // Get the position
-    model->removeRows(ui->listView->currentIndex().row(),1);
+
 }
